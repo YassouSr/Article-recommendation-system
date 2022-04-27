@@ -66,10 +66,15 @@ class Recommender:
         graph = instance.create_graph(self.query_id, [[self.query_id]], 0, config.GRAPH_LEVEL)
         graph_data = instance.get_graph_data(graph)
 
-        # get similar articles
+        # return similar articles
         if len(graph_data) <= config.N_SIMILAR:
-            distance, index = self.knn.kneighbors(self.query_embeddings)
-            return list(index[0])
+            _, index = self.knn.kneighbors(self.query_embeddings)
+            index = list(index[0])
+
+            if self.query_index in index:
+                index.remove(self.query_index)
+            
+            return index
         else:
             # get embeddings of graph nodes
             graph_embeddings = []
@@ -77,5 +82,10 @@ class Recommender:
                 tmp = Article.query.filter_by(id=xid).first()
                 graph_embeddings.append(self.embeddings[tmp.index])
 
-            similarity = self.calculate_similarity(self.query_embeddings, graph_embeddings)
-            return list(similarity.keys())
+            index = self.calculate_similarity(self.query_embeddings, graph_embeddings)
+            index = list(index.keys())
+
+            if self.query_index in index:
+                index.remove(self.query_index)
+            
+            return index

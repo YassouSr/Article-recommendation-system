@@ -80,7 +80,8 @@ def post(post_id):
     # get index of similar articles
     obj = recommender.Recommender(article.id, article.index)
     results = obj.get_similar_articles()
-    results.remove(article.index)
+    print(type(results))
+    print(len(results))
 
     # fetch similar articles from database
     related_articles = []

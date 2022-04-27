@@ -10,7 +10,7 @@ MODEL_PATH = "backend/bin/knn_model.pkl"
 
 # Algorithm tuning constants
 THRESHOLD = 0.5
-N_SIMILAR = 16
+N_SIMILAR = 15
 GRAPH_LEVEL = 3
 
 # Load binary data

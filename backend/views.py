@@ -1,6 +1,3 @@
-import os
-import secrets
-from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from backend import app, db, bcrypt
 from backend.forms import RegistrationForm, LoginForm, UpdateAccountForm, SearchForm
@@ -28,12 +25,8 @@ def register():
         return redirect(url_for("home"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode(
-            "utf-8"
-        )
-        user = User(
-            username=form.username.data, email=form.email.data, password=hashed_password
-        )
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
         flash("Your account has been created! You are now able to log in", "success")
@@ -63,20 +56,6 @@ def logout():
     return redirect(url_for("home"))
 
 
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, "static/profile_pics", picture_fn)
-
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
-
-
 @app.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
@@ -99,17 +78,22 @@ def post(post_id):
     article = Article.query.get_or_404(post_id)
 
     # get index of similar articles
-    obj =  recommender.Recommender(article.id, article.index)
+    obj = recommender.Recommender(article.id, article.index)
     results = obj.get_similar_articles()
     results.remove(article.index)
 
     # fetch similar articles from database
     related_articles = []
-    for i in results :
+    for i in results:
         tmp = Article.query.filter_by(index=int(i)).first()
         related_articles.append(tmp)
 
-    return render_template("post.html", title=article.title, post=article, related_articles=related_articles)
+    return render_template(
+        "post.html",
+        title=article.title,
+        post=article,
+        related_articles=related_articles
+    )
 
 
 # Search
@@ -126,8 +110,11 @@ def search():
             Article.title.like("%" + post.searched + "%")
             | Article.abstract.like("%" + post.searched + "%")
         )
-        articles = articles.order_by(Article.year.desc()).paginate(page=page, per_page=5)
+        articles = articles.order_by(Article.year.desc()).paginate(page=page, per_page=10)
 
         return render_template(
-            "search.html", form=form, searched=post.searched, posts=articles
+            "search.html", 
+            form=form, 
+            searched=post.searched, 
+            posts=articles
         )

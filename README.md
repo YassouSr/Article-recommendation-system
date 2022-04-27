@@ -2,23 +2,33 @@
 
 This project aims to build a scientific article recommendation system using citation network.
 
-To run the code, follow these steps :
+The data is download from [here](https://www.kaggle.com/datasets/kmader/aminer-academic-citation-dataset). Then we've applied some preprocessing techniques and upload it to postgresql.
 
-- Create new python environment outside the repo folder: ```python -m venv env```
+To be able to load the data to postgresql, install spark on your machine and execute ```convert.py``` script.
 
-  ```txt
-  main-folder
-  |--- repo-folder
-  |--- environment-folder
+To run the web application, apply the following steps :
+
+- Create new python environment:
+
+  ```cmd
+  cd Article-recommendation-system
+  python -m venv env
   ```
 
-- Activate the environment: ```.\env\Scripts\activate```
+- Activate the environment:
+
+  ```cmd
+  .\env\Scripts\activate
+  ```
+
 - Install the required packages (if not already installed):
   
   ```cmd
-  cd repo-folder
   pip install -r requirements.txt
   ```
 
-- To check the installed packages: ```pip freeze```
-- To run the app: ```python execute.py```
+- To run the app:
+
+  ```cmd
+  python execute.py
+  ```

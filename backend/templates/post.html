@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2">Cited {{ post.n_citation }} times</a>
+        <small class="text-muted">{{ post.year }}</small>
+      </div>
+
+      <h3 class="article-title">{{ post.title }}</h3>
+      <p class="article-content">{{ post.abstract }}</p>
+    </div>
+  </article>
+
+  <div class="content-section">
+    <h3>Related Articles</h3>
+
+    <ul class="list-group">
+      {% for article in related_articles %}
+        <li class="list-group-item list-group-item-light">
+          <a class="post-title" href="{{ url_for('post', post_id=article.id) }}" >
+            {{ article.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+        
+{% endblock content %}

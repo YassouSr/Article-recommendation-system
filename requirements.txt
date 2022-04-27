@@ -6,3 +6,5 @@ flask-wtf
 email-validator
 Pillow
 psycopg2
+numpy
+sklearn

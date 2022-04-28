@@ -5,7 +5,7 @@ from backend.models import Article
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
- 
+
 class Recommender:
     embeddings = config.load_data(config.EMBEDDINGS_PATH)
     knn = config.load_data(config.MODEL_PATH)

@@ -9,15 +9,14 @@
            <article class="media content-section">
                <div class="media-body">
                 <div class="article-metadata">
-               <small class="text-muted">{{ post.year }}</small>
-               </div>
+                   <small class="text-muted">{{ post.year }}</small>
+                </div>
                <h3>
                    <a class="post-title" href="{{ url_for('post', post_id=post.id) }}" >
                        {{ post.title }}
                     </a>
                 </h3>
                <p class="text-muted">{{ post.authors }}</p> 
-             
                </div>
         </article>
             <hr>

@@ -105,9 +105,7 @@ def search():
     if form.validate_on_submit:
         post.searched = form.searched.data
 
-        articles = articles.filter(
-            Article.title.like("%" + post.searched + "%")
-        )
+        articles = articles.filter(Article.title.like("%" + post.searched + "%"))
         articles = articles.order_by(Article.year.desc()).paginate(page=page, per_page=10)
 
         return render_template(

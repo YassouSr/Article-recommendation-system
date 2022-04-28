@@ -1,5 +1,4 @@
-from datetime import datetime
-from bloc import db, login_manager
+from backend import db, login_manager
 from flask_login import UserMixin
 from sqlalchemy.dialects.postgresql import ARRAY
 
@@ -10,8 +9,10 @@ def load_user(id):
 
 
 class User(db.Model, UserMixin):
+    # Postgresql dosn't allow table names "user"
     __tablename__ = "admin"
 
+    # id type is serial on postgre
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), nullable=False)
@@ -24,18 +25,19 @@ class User(db.Model, UserMixin):
            return (self.id)
 
 
-class Post(db.Model):
+class Article(db.Model):
 
-    __tablename__ = "aminer"
+    __tablename__ = "article"
 
-    abstract = db.Column(db.Text, nullable=False)
-    authors = db.Column(ARRAY(db.String()))
-    id = db.Column(db.String(), primary_key=True, nullable=False)
+    index = db.Column(db.Integer)
+    id = db.Column(db.Text, primary_key=True)
+    title = db.Column(db.Text)
+    abstract = db.Column(db.Text)
+    authors = db.Column(ARRAY(db.Text))
     n_citation = db.Column(db.Integer)
-    references = db.Column(ARRAY(db.String()))
-    title = db.Column(db.String(), nullable=False)
-    venue = db.Column(db.String())
+    references = db.Column(ARRAY(db.Text))
+    venue = db.Column(db.Text)
     year = db.Column(db.Integer)
 
     def __repr__(self):
-        return f"Post('{self.title}', '{self.year}')"
+        return f"Article('{self.id}', '{self.title}')"

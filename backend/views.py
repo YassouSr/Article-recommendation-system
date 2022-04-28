@@ -1,19 +1,17 @@
-import os
-import secrets
-from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
-from bloc import app, db, bcrypt
-from bloc.forms import RegistrationForm, LoginForm, UpdateAccountForm, SearchForm
-from bloc.models import User, Post
+from backend import app, db, bcrypt
+from backend.forms import RegistrationForm, LoginForm, UpdateAccountForm, SearchForm
+from backend.models import User, Article
 from flask_login import login_user, current_user, logout_user, login_required
+from backend.recommendation import recommender
 
 
 @app.route("/")
 @app.route("/home")
 def home():
     page = request.args.get("page", 1, type=int)
-    posts = Post.query.order_by(Post.year.desc()).paginate(page=page, per_page=5)
-    return render_template("home.html", posts=posts)
+    articles = Article.query.order_by(Article.year.desc()).paginate(page=page, per_page=10)
+    return render_template("home.html", posts=articles)
 
 
 @app.route("/about")
@@ -27,12 +25,8 @@ def register():
         return redirect(url_for("home"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode(
-            "utf-8"
-        )
-        user = User(
-            username=form.username.data, email=form.email.data, password=hashed_password
-        )
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
         flash("Your account has been created! You are now able to log in", "success")
@@ -81,26 +75,47 @@ def account():
 
 @app.route("/post/<post_id>")
 def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template("post.html", title=post.title, post=post)
+    article = Article.query.get_or_404(post_id)
+
+    # get index of similar articles
+    obj = recommender.Recommender(article.id, article.index)
+    results = obj.get_similar_articles()
+    print(type(results))
+    print(len(results))
+
+    # fetch similar articles from database
+    related_articles = []
+    for i in results:
+        tmp = Article.query.filter_by(index=int(i)).first()
+        related_articles.append(tmp)
+
+    return render_template(
+        "post.html",
+        title=article.title,
+        post=article,
+        related_articles=related_articles
+    )
 
 
 # Search
 @app.route("/search", methods=["POST"])
 def search():
     form = SearchForm()
-    posts = Post.query
+    articles = Article.query
     page = request.args.get("page", 1, type=int)
 
     if form.validate_on_submit:
         post.searched = form.searched.data
 
-        posts = posts.filter(
-            Post.title.like("%" + post.searched + "%")
-            | Post.abstract.like("%" + post.searched + "%")
+        articles = articles.filter(
+            Article.title.like("%" + post.searched + "%")
+            | Article.abstract.like("%" + post.searched + "%")
         )
-        posts = posts.order_by(Post.year.desc()).paginate(page=page, per_page=5)
+        articles = articles.order_by(Article.year.desc()).paginate(page=page, per_page=10)
 
         return render_template(
-            "search.html", form=form, searched=post.searched, posts=posts
+            "search.html", 
+            form=form, 
+            searched=post.searched, 
+            posts=articles
         )

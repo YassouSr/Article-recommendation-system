@@ -1,8 +1,9 @@
-pip install flask
-pip install flask-sqlalchemy
-pip install flask-bcrypt
-pip install flask-login
-pip install flask-wtf
-pip install email-validator
-pip install Pillow
-pip install psycopg2
+flask==2.1.1
+flask-sqlalchemy==2.5.1
+flask-bcrypt==1.0.1
+flask-login==0.6.0
+flask-wtf==1.0.1
+email-validator==1.2.0
+psycopg2==2.9.3
+numpy==1.22.3
+scikit-learn==1.0.2

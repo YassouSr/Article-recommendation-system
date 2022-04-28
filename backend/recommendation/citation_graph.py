@@ -1,6 +1,6 @@
 from backend.models import Article
 
-class CitationGraph:
+class CitationGraph: 
     def create_graph(self, xid, graph, index, max_level):
         """
         Description :

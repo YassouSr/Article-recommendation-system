@@ -3,12 +3,12 @@
 <article class="media content-section">
   <div class="media-body">
     <div class="article-metadata">
-      <span class="mr-2">Cited {{ post.n_citation }} times</span>
       <small class="text-muted">{{ post.year }}</small>
     </div>
 
     <h3 class="article-title">{{ post.title }}</h3>
-    <p class="article-content">{{ post.abstract }}</p>
+    <p class="text-muted">{{ post.authors }}</p> 
+    <a href="{{ post.link }}">{{ post.link }}</a>  
   </div>
 </article>
 

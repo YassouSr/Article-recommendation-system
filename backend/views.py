@@ -78,15 +78,13 @@ def post(post_id):
     article = Article.query.get_or_404(post_id)
 
     # get index of similar articles
-    obj = recommender.Recommender(article.id, article.index)
+    obj = recommender.Recommender(article.id)
     results = obj.get_similar_articles()
-    print(type(results))
-    print(len(results))
 
     # fetch similar articles from database
     related_articles = []
     for i in results:
-        tmp = Article.query.filter_by(index=int(i)).first()
+        tmp = Article.query.filter_by(id=int(i)).first()
         related_articles.append(tmp)
 
     return render_template(
@@ -109,7 +107,6 @@ def search():
 
         articles = articles.filter(
             Article.title.like("%" + post.searched + "%")
-            | Article.abstract.like("%" + post.searched + "%")
         )
         articles = articles.order_by(Article.year.desc()).paginate(page=page, per_page=10)
 

@@ -1,33 +1,34 @@
 {% extends "layout.html" %}
 {% block content %}
-{% for post in posts.items %}
-<article class="media content-section shadow p-3 mb-5 bg-body rounded col-xl-11">
-  <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/default1.jpg' ) }}">
-  <div class="media-body">
-    <div class="article-metadata">
-      <span class="mr-2"> Cited {{ post.n_citation }} times</span>
-      <small class="text-muted">{{ post.year }}</small>
+  {% for post in posts.items %}
+  <article class="media content-section shadow p-3 mb-5 bg-body rounded col-xl-11">
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/default1.jpg' ) }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <small class="text-muted">{{ post.year }}</small>
+      </div>
+      <h3>
+        <a class="post-title" href="{{ url_for('post', post_id=post.id) }}">
+          {{ post.title }}
+        </a>
+      </h3>
+      <p class="text-muted">{{ post.authors }}</p>  
     </div>
-    <h3><a class="post-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h3>
-    <u class="text-muted">
-      {{ post.authors }}
-    </u>
-    <p class="article-content">{{ post.abstract[:200] }}<span>&#8230;</span></p>
 
-  </div>
+  </article>
+  {% endfor %}
 
-</article>
-{% endfor %}
-
-{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-{% if page_num %}
-{% if posts.page == page_num %}
-<a class="btn btn-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
-{% else %}
-<a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
-{% endif %}
-{% else %}
-...
-{% endif %}
-{% endfor %}
+  {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if posts.page == page_num %}
+        <a class="btn btn-info mb-4" href="{{ url_for('home', page=page_num) }}">
+          {{ page_num }}
+        </a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_num) }}">
+          {{ page_num }}
+        </a>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
 {% endblock content %}

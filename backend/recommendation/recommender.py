@@ -5,15 +5,14 @@ from backend.models import Article
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
-
+ 
 class Recommender:
     embeddings = config.load_data(config.EMBEDDINGS_PATH)
     knn = config.load_data(config.MODEL_PATH)
 
-    def __init__(self, qid, qindex):
+    def __init__(self, qid):
         self.query_id = qid
-        self.query_index = qindex
-        self.query_embeddings = np.array(self.embeddings[qindex]).reshape(1, -1)
+        self.query_embeddings = np.array(self.embeddings[qid]).reshape(1, -1)
 
     def calculate_similarity(self, query, data, n=config.N_SIMILAR, threshold=config.THRESHOLD):
         """
@@ -71,8 +70,8 @@ class Recommender:
             _, index = self.knn.kneighbors(self.query_embeddings)
             index = list(index[0])
 
-            if self.query_index in index:
-                index.remove(self.query_index)
+            if self.query_id in index:
+                index.remove(self.query_id)
             
             return index
         else:
@@ -80,12 +79,12 @@ class Recommender:
             graph_embeddings = []
             for xid in graph_data:
                 tmp = Article.query.filter_by(id=xid).first()
-                graph_embeddings.append(self.embeddings[tmp.index])
+                graph_embeddings.append(self.embeddings[tmp.id])
 
             index = self.calculate_similarity(self.query_embeddings, graph_embeddings)
             index = list(index.keys())
 
-            if self.query_index in index:
-                index.remove(self.query_index)
+            if self.query_id in index:
+                index.remove(self.query_id)
             
             return index

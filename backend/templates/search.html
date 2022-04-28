@@ -9,13 +9,14 @@
            <article class="media content-section">
                <div class="media-body">
                 <div class="article-metadata">
-               <span class="mr-2">Cited {{ post.n_citation }} times</span>
-               <small class="text-muted">{{ post.year }}</small>
-               </div>
-               <h3><a class="post-title" href="{{ url_for('post', post_id=post.id) }}" >{{ post.title }}</a></h3>
-               <u class="text-muted" >{{ post.author }}</u>
-               <p class="article-content">{{ post.abstract[:200] }}<span>&#8230;</span></p>
-             
+                   <small class="text-muted">{{ post.year }}</small>
+                </div>
+               <h3>
+                   <a class="post-title" href="{{ url_for('post', post_id=post.id) }}" >
+                       {{ post.title }}
+                    </a>
+                </h3>
+               <p class="text-muted">{{ post.authors }}</p> 
                </div>
         </article>
             <hr>

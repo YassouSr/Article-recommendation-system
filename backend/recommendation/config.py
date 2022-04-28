@@ -1,7 +1,3 @@
-"""
-This file contains necessary information for recommendation algorithm.
-"""
-
 import pickle
 
 # Files path
@@ -9,8 +5,8 @@ EMBEDDINGS_PATH = "backend/bin/word2vec_embeddings.pkl"
 MODEL_PATH = "backend/bin/knn_model.pkl"
 
 # Algorithm tuning constants
-THRESHOLD = 0.5
-N_SIMILAR = 15
+THRESHOLD = 0.3
+N_SIMILAR = 6
 GRAPH_LEVEL = 3
 
 # Load binary data

@@ -20,23 +20,20 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
-    
+
     def get_id(self):
-           return (self.id)
+        return self.id
 
 
 class Article(db.Model):
 
     __tablename__ = "article"
 
-    index = db.Column(db.Integer)
-    id = db.Column(db.Text, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
-    abstract = db.Column(db.Text)
-    authors = db.Column(ARRAY(db.Text))
-    n_citation = db.Column(db.Integer)
-    references = db.Column(ARRAY(db.Text))
-    venue = db.Column(db.Text)
+    link = db.Column(db.Text)
+    authors = db.Column(db.Text)
+    references = db.Column(ARRAY(db.Integer))
     year = db.Column(db.Integer)
 
     def __repr__(self):

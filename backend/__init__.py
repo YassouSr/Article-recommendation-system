@@ -8,7 +8,7 @@ import secrets
 app = Flask(__name__)
 username = "postgres"
 port = "5432"
-db_name = "recommendation"
+db_name = "recommendationV2"
 db_password = "amina"
 
 app.config["SECRET_KEY"] = secrets.token_hex(16)

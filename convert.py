@@ -9,7 +9,7 @@ db_name = "recommendationV2"
 db_table = "article"
 db_user = "postgres"
 db_password = "amina"
-df_path = "data/random_data.json"
+df_path = "Article-recommendation-system/data/random_data.json"
 
 spark = (
     SparkSession.builder.appName("postgres")

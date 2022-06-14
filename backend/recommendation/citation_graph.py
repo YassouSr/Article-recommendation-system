@@ -1,66 +1,67 @@
+''' Class de création de graphe de citations '''
+
 from backend.models import Article
+
 
 class CitationGraph: 
     def create_graph(self, xid, graph, index, max_level):
-        """
+        """ 
         Description :
         --------------
-        Create graph of references for a query with multiple level.
+        Créer un graphe de citaitons pour une requête à plusieurs niveaux.
 
-        Attribute :
+        Paramètres :
         ------------
-        - xid : query article id.
-        - graph : Iterable of lists. Each sub-list represent a graph level.
-        - data : pandas dataframe.
-        - index : current graph level.
-        - max_level : maximul level of graph to create.
+        - xid : identifiant de l'article de la requête.
+        - graph : Nested list. Chaque sous-liste représente un niveau du graphe.
+        - index : niveau actuel du graphe.
+        - max_level : niveau maximum du graphe à créer.
 
-        Output : Return list of list of articles' id.
+        Sortie : Retourne une liste des articles.
         """
-        # level of graph reached the maximim level allowed
+
+        # Si le niveau du graphe est supérieur au niveau maximal autorisé
         if len(graph) >= max_level:
             return graph
 
-        # get articles' id of current level (index)
+        # Obtenir l'identifiant des articles du niveau actuel (index)
         children = []
         for vertex in graph[index]:
-            # vertex_row = data.filter("id == '%s'" % vertex).select("references").collect()
             vertex_row = Article.query.filter_by(id=vertex).first()
             references = vertex_row.references
 
             if references is not None:
                 for ref in references:
-                    # tmp = data.filter("id == '%s'" % ref).collect()
                     tmp = Article.query.filter_by(id=ref).first()
-                    if (
-                        ref != xid
+                    if (ref != xid
                         and not any(ref in subl for subl in graph)
-                        and tmp is not None
-                    ):
+                        and tmp is not None) :
                         children.append(ref)
 
-        # no data for current graph level
+        # Pas de données pour le niveau actuel du graphe
         if len(children) == 0:
             return graph
         else:
             graph.append(children)
             return self.create_graph(xid, graph, len(graph) - 1, max_level)
 
+
     def get_graph_data(self, graph):
         """
         Description :
         --------------
-        Get all articles' ids from citation graph.
+        Récupèrer les identifiants de tous les articles du graphe de citation.
 
-        Attribute :
+        Paramètres :
         ------------
-        - graph : List of lists of objects. Each item in graph represents level.
-        - level : Integer. Represents level of graph to extract data from.
+        - graph : Liste de listes d'objets. Chaque élément du graphe représente un niveau.
 
-        Output : Return list of objects.
+        Sortie : Retourner une liste des identifiants.
         """
+
         references = []
-        # exclude level 0 since it represents the query
+
+        # Exclue le niveau 0 puisqu'il représente la requête
         for subl in graph[1:]:
             for xid in subl:
                 references.append(xid)

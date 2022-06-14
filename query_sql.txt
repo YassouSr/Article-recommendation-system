@@ -1,0 +1,39 @@
+Deletion of tables :
+-------------------
+drop table articlebook;
+drop table article;
+drop table admin;
+
+Creation of tables :
+-------------------
+% execute convert.py file first %
+
+alter table article add constraint pk_article PRIMARY KEY (id);
+
+CREATE TABLE public.admin
+(
+    id SERIAL PRIMARY KEY,
+    username character varying(20) NOT NULL,
+    email character varying(120) NOT NULL,
+    password character varying(60) NOT NULL,
+    CONSTRAINT admin_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.articlebook
+(
+    id SERIAL PRIMARY KEY,
+    title text,
+    date_seen timestamp with time zone,
+    user_id integer,
+    post_id integer,
+    CONSTRAINT articlebook_pkey PRIMARY KEY (id),
+    CONSTRAINT post_id FOREIGN KEY (post_id)
+        REFERENCES article (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES admin (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+

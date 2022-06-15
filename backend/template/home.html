@@ -1,10 +1,10 @@
-{% extends "layout.html" %}
-{% block content %}
-  {% for post in posts.items %}
+{% extends "layout.html" %}<!-- pour hériter du modèle de base  layout.html -->
+{% block content %}<!-- le conteu de l'interface de la page Home -->
+  {% for post in posts.items %}<!-- boucle pour affichier tous les articles dans la BDD -->
   <article class="media content-section shadow p-3 mb-5 bg-body rounded col-xl-11">
-    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/default1.jpg' ) }}">
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/6.png' ) }}">
     <div class="media-body">
-      <div class="article-metadata">
+      <div class="article-metadata"><!-- les informations retourner pour chaque articles "l'annee,le titre,l'auteur "  -->
         <small class="text-muted">{{ post.year }}</small>
       </div>
       <h3>
@@ -13,6 +13,7 @@
         </a>
       </h3>
       <p class="text-muted">{{ post.authors }}</p>  
+
     </div>
 
   </article>
@@ -20,7 +21,7 @@
 
   {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
     {% if page_num %}
-      {% if posts.page == page_num %}
+      {% if posts.page == page_num %}<!-- le bloc de la pagination -->
         <a class="btn btn-info mb-4" href="{{ url_for('home', page=page_num) }}">
           {{ page_num }}
         </a>

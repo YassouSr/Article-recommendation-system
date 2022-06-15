@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>You searched for "{{ searched }}"</h2>
+    <br/>
+
+    {% if posts.items %}
+
+      {% for post in posts.items %}
+    <article class="media content-section shadow p-3 mb-5 bg-body rounded col-xl-11">
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/6.png' ) }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <small class="text-muted">{{ post.year }}</small>
+      </div>
+      <h3>
+        <a class="post-title" href="{{ url_for('post', post_id=post.id) }}">
+          {{ post.title }}
+        </a>
+      </h3>
+      <p class="text-muted">{{ post.authors }}</p>  
+
+    </div>
+
+  </article>
+            <hr>
+        {% endfor %}
+
+    {% else %}
+
+        <h3>No Results</h3>
+
+    {% endif %}
+{% endblock content %}

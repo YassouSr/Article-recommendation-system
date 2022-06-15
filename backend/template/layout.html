@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <!-- Required meta tags -->
+  <!-- Balises méta requises -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,8 +11,9 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-  <!-- Load icon library -->
+   <!-- obtenir les fichiers requis à partir de sources tierces -->
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <!-- Charger la bibliothèque d'icônes -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   {% if title %}
@@ -22,7 +23,7 @@
   {% endif %}
 </head>
 
-<body>
+<body><!-- le conteu de page de base -->
 
   <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top " style="border-bottom-width: 0px;">
     <div class="container">
@@ -36,11 +37,13 @@
           <a class="nav-item nav-link" href="/">Home</a>
           <a class="nav-item nav-link" href="/about">About</a>
           {% if current_user.is_authenticated %}
-          <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+          <a class="nav-item nav-link" href="{{ url_for('account', username=current_user.username) }}">Account</a>
+           
           <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
           {% else %}
           <a class="nav-item nav-link" href="/login">Login</a>
           <a class="nav-item nav-link" href="/register">Register</a>
+
           {% endif %}
         </div>
         <!-- Navbar Right Side -->
@@ -54,7 +57,7 @@
     </div>
   </nav>
   <!-- page header -->
-  <header class="masthead" style="background-image: url('/static/bib4.jpg');">
+  <header class="masthead" style="background-image: url('/static/bib3.jpg');">
     <div class="position-relative px-4 px-lg-5">
       <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">

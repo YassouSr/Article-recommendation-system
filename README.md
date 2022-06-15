@@ -6,7 +6,7 @@ This project aims to build a scientific article recommendation system using cita
 
 The data is download from [here](https://www.aminer.org/citation). Then we've applied some preprocessing techniques and upload it to postgresql.
 
-To be able to load the data to postgresql, install spark on your machine and execute ```convert.py``` script and the queries listed in ````query_sql.txt```.
+To be able to load the data to postgresql, install spark on your machine and execute ```convert.py``` script and the queries listed in ```query_sql.txt```.
 
 After storing the data to postgresql, you must also load binary data (*.pkl files) from [here](https://www.kaggle.com/code/yassou432/recommendation-system-part-2-2/data) into recommendation/bin folder.
 

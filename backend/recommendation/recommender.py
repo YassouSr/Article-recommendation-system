@@ -12,7 +12,6 @@ class Recommender:
     embeddings = config.load_data(config.EMBEDDINGS_PATH)
     knn = config.load_data(config.MODEL_PATH)
 
-
     def __init__(self, qid):
         self.query_id = qid
         self.query_embeddings = np.array(self.embeddings[qid]).reshape(1, -1)

@@ -52,23 +52,19 @@ Après avoir configuré la base de données et les fichiers nécessaires. Exécu
 ## UI de notre application
 
 Page Home :
-![home](https://mega.nz/file/jixmHAjL#KfiN-qjwGRBlbh-J7QME8GdvvA9afv8WQRY_We32Sdo)
+![home](https://user-images.githubusercontent.com/37484871/197530911-6d416414-694b-4657-a0bf-7fc9d1a64c02.jpg)
 
 Page de description d'article avec la liste des remmandations retournée par notre algorithme :
-![description](https://mega.nz/file/z2gTGT6a#FZ6eDHTrwRp77ywkT6ITw0am0388-tasy-Tl-N2Qx2I)
+![description](https://user-images.githubusercontent.com/37484871/197530894-c328e3fe-9307-4b21-a59b-e0f58b0df417.jpg)
 
 Inscription de l’utilisateur :
-![inscription](https://mega.nz/file/7nhxkSBC#0Vgzis79snLfsxApNcVT5h8zsbiPoJWEvYljnsl-IIQ)
+![register](https://user-images.githubusercontent.com/37484871/197530923-c9a83414-6d2d-45a6-b5c2-1ef75c925ff4.jpg)
 
 Connexion au compte utilisateur
-![connexion](https://mega.nz/file/jrQwWZBK#FkcNgSXJSCfXkGckJ0oJ1qDAMskoWrc7tRhgt_wqMSw)
+![login](https://user-images.githubusercontent.com/37484871/197530915-1b1c5cc5-9a58-4b7d-b177-394a2c8078ea.jpg)
 
 Compte d'utilisateur :
-![profile](https://mega.nz/file/X6gmSB5Z#z60XxUtI9C48d90W_Zo28mYS7JzDAdBTZTKyKYIjQuI)
+![profil](https://user-images.githubusercontent.com/37484871/197530917-05e0a10d-763f-4d10-8b01-c26d51405186.jpg)
 
 Historique :
-![history](https://mega.nz/file/vn4QhKrK#OanPLCmaKGRNp6-weYj3LuQNXDQTcJ5yBZ5rqcNgOzQ)
-
-
-
-
+![history](https://user-images.githubusercontent.com/37484871/197530904-41ee014b-31a2-4928-94c1-165e5280166b.jpg)
